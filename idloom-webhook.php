@@ -35,7 +35,7 @@ function idloom_webhook_handler(WP_REST_Request $request) {
 
     error_log('Parsed JSON Data: ' . print_r($data, true));
 
-    // Check consent to update
+    // Check consent to update (free_field59 is the consent flag)
     if (empty($data['free_field59']) || !in_array($data['free_field59'], [true, 'true', 1], true)) {
         error_log('free_field59 is not true. Webhook will not be processed.');
         return rest_ensure_response([
@@ -55,7 +55,8 @@ function idloom_webhook_handler(WP_REST_Request $request) {
         'city' => !empty($data['cpy_city']) ? sanitize_text_field($data['cpy_city']) : '',
         'zip_code' => !empty($data['cpy_zip_code']) ? sanitize_text_field($data['cpy_zip_code']) : '',
         'country' => !empty($data['cpy_country']) ? sanitize_text_field($data['cpy_country']) : '',
-        'cast_year' => !empty($data['free_field12']) ? sanitize_text_field($data['free_field12']) : ''
+        // FIX: Replaced free_field12 with the correct key, cpy_name
+        'cast_year' => !empty($data['cpy_name']) ? sanitize_text_field($data['cpy_name']) : '' 
     ];
 
     // Initialize CiviCRM

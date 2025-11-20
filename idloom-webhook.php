@@ -104,6 +104,7 @@ function idloom_webhook_handler(WP_REST_Request $request) {
                     'is_primary' => true,
                 ],
                 'checkPermissions' => false,
+                'reload' => false,
             ]);
         }
 
